@@ -1,4 +1,4 @@
-package com.academy.ramon.instagramapp;
+package com.academy.ramon.marvelcomicviewer;
 
 import org.junit.Test;
 

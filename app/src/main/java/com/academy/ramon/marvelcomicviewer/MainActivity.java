@@ -1,4 +1,4 @@
-package com.academy.ramon.instagramapp;
+package com.academy.ramon.marvelcomicviewer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
