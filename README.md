@@ -1,7 +1,7 @@
-# InstagramApp
+# MarvelView
 
 ##Description
-- Simple Instagram API interaction which will allow you to display images taken in places nearby your current location.
+- Simple Marvel API interaction which allows the user to browse through the heroes and their apperances in comics.
 
 ##Libraries used
  - Instagram API
