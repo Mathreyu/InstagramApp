@@ -1,12 +1,14 @@
 package com.academy.ramon.marvelcomicviewer;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.academy.ramon.marvelcomicviewer.api.MarvelAPI;
+import com.academy.ramon.marvelcomicviewer.models.Data;
 import com.academy.ramon.marvelcomicviewer.models.Heroes;
 import com.academy.ramon.marvelcomicviewer.models.HeroesResponse;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
@@ -24,14 +26,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends Activity {
     @BindView(R.id.rvHeroes) RecyclerView rvHeroes;
     List<Heroes> heroes;
+    Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         getHeroesList();
+        context = this;
+        ButterKnife.bind(this);
+
 
     }
 
@@ -49,11 +54,13 @@ public class MainActivity extends Activity {
             public void onResponse(Call<HeroesResponse> call, Response<HeroesResponse> response) {
                 HeroesResponse heroesResponse;
                 heroesResponse = response.body();
-                rvHeroes.setAdapter(new HeroAdapter(heroesResponse.getItems(),rvHeroes.getContext()));
-                heroes = heroesResponse.getItems();
-                Log.d("hey there", response.body().toString());
-            }
+                heroes = heroesResponse.getData().getResults();
+                HeroAdapter adapter = new HeroAdapter(heroes, rvHeroes.getContext());
+                rvHeroes.setAdapter(adapter);
+                rvHeroes.setLayoutManager(new LinearLayoutManager(rvHeroes.getContext()));
 
+                Log.d("hey there", heroes.get(0).toString());
+            }
             @Override
             public void onFailure(Call<HeroesResponse> call, Throwable t) {
                 Log.d("onFailure", t.toString());

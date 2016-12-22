@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Ramon on 12/21/2016.
@@ -23,20 +24,20 @@ import butterknife.ButterKnife;
 
 public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
+    private List<Heroes> heroesList;
+    private Context context;
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.hero_name) TextView heroName;
-        public ImageView heroThumbnail;
+        public CircleImageView heroThumbnail;
 
         public ViewHolder (View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            heroThumbnail = (ImageView) itemView.findViewById(R.id.hero_thumbnail);
+            heroThumbnail = (CircleImageView) itemView.findViewById(R.id.hero_thumbnail);
         }
     }
-
-    private List<Heroes> heroesList;
-    private Context context;
 
     public HeroAdapter(List<Heroes> heroesList, Context context) {
         this.heroesList = heroesList;
@@ -48,6 +49,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
     }
     @Override
     public HeroAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        context = this.getContext();
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -62,7 +64,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
         TextView textView = viewHolder.heroName;
         textView.setText(hero.getName());
         ImageView imageView = viewHolder.heroThumbnail;
-        Picasso.with(this.context).load(hero.getThumbnail().getPath()).into(imageView);
+        Picasso.with(imageView.getContext()).load(hero.getThumbnail().getPath() +"."+ hero.getThumbnail().getExtension()).into(imageView);
     }
 
     @Override

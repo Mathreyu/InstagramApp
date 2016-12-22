@@ -6,6 +6,11 @@ package com.academy.ramon.marvelcomicviewer.models;
 
 public class Thumbnail {
     String path;
+    String extension;
+
+    public String getExtension() {
+        return extension;
+    }
 
     public String getPath() {
         return path;
