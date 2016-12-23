@@ -25,17 +25,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
     private List<Heroes> heroesList;
-    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.hero_name) TextView heroName;
-        public CircleImageView heroThumbnail;
+        @BindView(R.id.hero_thumbnail) CircleImageView heroThumbnail;
 
         public ViewHolder (View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            heroThumbnail = (CircleImageView) itemView.findViewById(R.id.hero_thumbnail);
         }
     }
 
@@ -44,12 +41,8 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
     }
 
-    public Context getContext() {
-        return context;
-    }
     @Override
     public HeroAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        context = this.getContext();
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -61,6 +54,10 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(HeroAdapter.ViewHolder viewHolder, int position){
         Heroes hero = heroesList.get(position);
+        bind(viewHolder, hero);
+    }
+
+    private void bind(ViewHolder viewHolder, Heroes hero ) {
         TextView textView = viewHolder.heroName;
         textView.setText(hero.getName());
         ImageView imageView = viewHolder.heroThumbnail;

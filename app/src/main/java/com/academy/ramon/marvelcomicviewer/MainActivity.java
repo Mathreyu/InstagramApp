@@ -26,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends Activity {
     @BindView(R.id.rvHeroes) RecyclerView rvHeroes;
     List<Heroes> heroes;
-    Context context;
 
 
     @Override
@@ -34,7 +33,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getHeroesList();
-        context = this;
         ButterKnife.bind(this);
 
 
@@ -58,8 +56,6 @@ public class MainActivity extends Activity {
                 HeroAdapter adapter = new HeroAdapter(heroes, rvHeroes.getContext());
                 rvHeroes.setAdapter(adapter);
                 rvHeroes.setLayoutManager(new LinearLayoutManager(rvHeroes.getContext()));
-
-                Log.d("hey there", heroes.get(0).toString());
             }
             @Override
             public void onFailure(Call<HeroesResponse> call, Throwable t) {
