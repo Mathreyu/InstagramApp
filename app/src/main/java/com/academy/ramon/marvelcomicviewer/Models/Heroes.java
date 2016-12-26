@@ -10,13 +10,23 @@ public class Heroes {
     Thumbnail thumbnail;
     String resourceURI;
     Comics comics;
+    int id;
 
-    public Heroes(String name, String description, Thumbnail thumbnail, String resourceURI, Comics comics) {
+    public Heroes(int id, String name, String description, Thumbnail thumbnail, String resourceURI, Comics comics) {
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
         this.resourceURI = resourceURI;
         this.comics = comics;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

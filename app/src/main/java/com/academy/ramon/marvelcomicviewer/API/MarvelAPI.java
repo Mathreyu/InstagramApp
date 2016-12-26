@@ -3,7 +3,7 @@ package com.academy.ramon.marvelcomicviewer.api;
 import com.academy.ramon.marvelcomicviewer.models.*;
 
 import java.util.List;
-
+import rx.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -20,6 +20,6 @@ public interface MarvelAPI {
     Call<List<Comics>> showCharacterComics(@Path("characterId") String charachterId);
 
     @GET("characters?limit=100&" + OVERHEAD)
-    Call<HeroesResponse> listHeroes();
+    Observable<HeroesResponse> listHeroes();
 
 }
