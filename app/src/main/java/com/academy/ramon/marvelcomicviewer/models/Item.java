@@ -4,11 +4,11 @@ package com.academy.ramon.marvelcomicviewer.models;
  * Created by Ramon on 12/20/2016.
  */
 
-public class Items {
+public class Item {
     String resourceURI;
     String name;
 
-    public Items(String resourceURI, String name) {
+    public Item(String resourceURI, String name) {
         this.resourceURI = resourceURI;
         this.name = name;
     }

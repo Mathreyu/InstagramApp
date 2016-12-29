@@ -1,10 +1,12 @@
 package com.academy.ramon.marvelcomicviewer.models;
 
+import java.util.List;
+
 /**
  * Created by Ramon on 12/20/2016.
  */
 
-public class Heroes {
+public class Hero {
     String name;
     String description;
     Thumbnail thumbnail;
@@ -12,7 +14,7 @@ public class Heroes {
     Comics comics;
     int id;
 
-    public Heroes(int id, String name, String description, Thumbnail thumbnail, String resourceURI, Comics comics) {
+    public Hero(int id, String name, String description, Thumbnail thumbnail, String resourceURI, Comics comics) {
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
@@ -65,7 +67,7 @@ public class Heroes {
         return comics;
     }
 
-    public void setComics(Comics comics) {
+    public void setComicsLists(Comics comicsLists) {
         this.comics = comics;
     }
 }

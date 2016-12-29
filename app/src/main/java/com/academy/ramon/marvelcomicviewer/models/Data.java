@@ -7,13 +7,13 @@ import java.util.List;
  */
 
 public class Data {
-    public List<Heroes> results;
+    public List<Hero> results;
 
-    public Data(List<Heroes> results) {
+    public Data(List<Hero> results) {
         this.results = results;
     }
 
-    public List<Heroes> getResults() {
+    public List<Hero> getResults() {
         return results;
     }
 }

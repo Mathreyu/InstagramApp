@@ -1,45 +1,56 @@
-package com.academy.ramon.marvelcomicviewer;
+package com.academy.ramon.marvelcomicviewer.views;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
+import com.academy.ramon.marvelcomicviewer.R;
 import com.academy.ramon.marvelcomicviewer.api.MarvelAPI;
-import com.academy.ramon.marvelcomicviewer.models.Hero;
+import com.academy.ramon.marvelcomicviewer.models.ComicData;
+import com.academy.ramon.marvelcomicviewer.models.ComicResults;
+import com.academy.ramon.marvelcomicviewer.models.Comics;
 import com.academy.ramon.marvelcomicviewer.models.HeroesResponse;
+import com.academy.ramon.marvelcomicviewer.util.ComicAdapter;
 import com.academy.ramon.marvelcomicviewer.util.GridSpacingItemDecoration;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
 
 import java.util.List;
-import rx.Observable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.plugins.RxJavaErrorHandler;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends Activity {
-    @BindView(R.id.rvHeroes) RecyclerView rvHeroes;
-    List<Hero> heros;
+/**
+ * Created by Ramon on 12/28/2016.
+ */
+
+public class ComicListView extends Activity {
+
+    List<ComicResults> comics;
+    @BindView(R.id.rvComics) RecyclerView rvComics;
+    String id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getHeroes();
+        id = getIntent().getExtras().getString("heroID");
+        setContentView(R.layout.comics_list);
+        getComics();
         ButterKnife.bind(this);
-
     }
 
-    public void getHeroes(){
+    public void getComics(){
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -47,17 +58,17 @@ public class MainActivity extends Activity {
                 .build();
 
         MarvelAPI service = retrofit.create(MarvelAPI.class);
-        Observable<HeroesResponse> heroService = service.listHeroes();
+        Observable<ComicData> comicService = service.listComics(id);
 
-        heroService.subscribeOn(Schedulers.newThread())
+        comicService.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(hero -> {
-                    heros = hero.getData().getResults();
-                    HeroAdapter adapter = new HeroAdapter(heros, rvHeroes.getContext());
-                    rvHeroes.setLayoutManager(new GridLayoutManager(this,1));
-                    rvHeroes.setItemAnimator(new DefaultItemAnimator());
-                    rvHeroes.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(10), true));
-                    rvHeroes.setAdapter(adapter);
+                .subscribe(comic -> {
+                    comics = comic.getResults();
+                    ComicAdapter adapter = new ComicAdapter(comics, rvComics.getContext());
+                    rvComics.setLayoutManager(new GridLayoutManager(this,2));
+                    rvComics.setItemAnimator(new DefaultItemAnimator());
+                    rvComics.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    rvComics.setAdapter(adapter);
                 });
     }
 
@@ -66,4 +77,3 @@ public class MainActivity extends Activity {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r));
     }
 }
-

@@ -1,15 +1,18 @@
 package com.academy.ramon.marvelcomicviewer.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.academy.ramon.marvelcomicviewer.R;
-import com.academy.ramon.marvelcomicviewer.models.Heroes;
+import com.academy.ramon.marvelcomicviewer.models.Hero;
+import com.academy.ramon.marvelcomicviewer.views.ComicListView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,21 +27,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
-    private List<Heroes> heroesList;
+    private List<Hero> heroList;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final Context context;
+
         @BindView(R.id.hero_name) TextView heroName;
         @BindView(R.id.hero_thumbnail) CircleImageView heroThumbnail;
 
         public ViewHolder (View itemView){
             super(itemView);
+            context = itemView.getContext();
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public HeroAdapter(List<Heroes> heroesList, Context context) {
-        this.heroesList = heroesList;
-
+    public HeroAdapter(List<Hero> heroList, Context context) {
+        this.heroList = heroList;
     }
 
     @Override
@@ -53,11 +58,20 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(HeroAdapter.ViewHolder viewHolder, int position){
-        Heroes hero = heroesList.get(position);
+        Hero hero = heroList.get(position);
         bind(viewHolder, hero);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = String.valueOf(hero.getId());
+                Intent intent = new Intent(view.getContext(), ComicListView.class);
+                intent.putExtra("heroID",id);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
-    private void bind(ViewHolder viewHolder, Heroes hero ) {
+    private void bind(ViewHolder viewHolder, Hero hero ) {
         TextView textView = viewHolder.heroName;
         textView.setText(hero.getName());
         ImageView imageView = viewHolder.heroThumbnail;
@@ -66,6 +80,6 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return heroesList.size();
+        return heroList.size();
     }
 }
