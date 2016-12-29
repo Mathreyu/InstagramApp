@@ -37,7 +37,7 @@
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/published_date"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/comic_title"
@@ -45,15 +45,6 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textSize="12dp" />
-
-            <ImageView
-                android:id="@+id/overflow"
-                android:layout_width="20dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/thumbnail"
-                android:layout_marginTop="10dp"
-                android:scaleType="centerCrop" />
 
         </RelativeLayout>
 

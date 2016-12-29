@@ -11,15 +11,13 @@ public class Hero {
     String description;
     Thumbnail thumbnail;
     String resourceURI;
-    Comics comics;
     int id;
 
-    public Hero(int id, String name, String description, Thumbnail thumbnail, String resourceURI, Comics comics) {
+    public Hero(int id, String name, String description, Thumbnail thumbnail, String resourceURI) {
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
         this.resourceURI = resourceURI;
-        this.comics = comics;
         this.id = id;
     }
 
@@ -63,11 +61,4 @@ public class Hero {
         this.resourceURI = resourceURI;
     }
 
-    public Comics getComics() {
-        return comics;
-    }
-
-    public void setComicsLists(Comics comicsLists) {
-        this.comics = comics;
-    }
 }

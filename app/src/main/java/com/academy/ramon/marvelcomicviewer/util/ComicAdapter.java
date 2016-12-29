@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.academy.ramon.marvelcomicviewer.R;
-import com.academy.ramon.marvelcomicviewer.models.ComicData;
 import com.academy.ramon.marvelcomicviewer.models.ComicResults;
-import com.academy.ramon.marvelcomicviewer.models.Comics;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -24,13 +24,13 @@ import butterknife.ButterKnife;
  */
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> {
-    private List<ComicResults> comicsList;
+    private ComicResults[] comicsList;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.thumbnail)
         ImageView comicImage;
-        @BindView(R.id.published_date)
-        TextView pubDate;
+        @BindView(R.id.description)
+        TextView description;
         @BindView(R.id.comic_title)
         TextView comicTitle;
         String collectionURI;
@@ -43,7 +43,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
         }
     }
 
-    public ComicAdapter(List<ComicResults> comicsList, Context context) {
+    public ComicAdapter(ComicResults[] comicsList, Context context) {
         this.comicsList = comicsList;
 
     }
@@ -66,7 +66,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ComicAdapter.ViewHolder viewHolder, int position){
-        ComicResults comic = comicsList.get(position);
+        ComicResults comic = comicsList[position];
         bind(viewHolder, comic);
 
     }
@@ -74,12 +74,14 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
         TextView textView = viewHolder.comicTitle;
         textView.setText(comic.getTitle());
         ImageView imageView = viewHolder.comicImage;
-        Picasso.with(imageView.getContext()).load(comic.getImages().getPath() +"."+ comic.getImages().getExtension()).into(imageView);
+        TextView pubDate  = viewHolder.description;
+        pubDate.setText(comic.getDescription());
+        Picasso.with(imageView.getContext()).load(comic.getImages()[0].getPath() +"."+ comic.getImages()[0].getExtension()).into(imageView);
     }
 
 
     @Override
     public int getItemCount() {
-        return comicsList.size();
+        return comicsList.length;
     }
 }

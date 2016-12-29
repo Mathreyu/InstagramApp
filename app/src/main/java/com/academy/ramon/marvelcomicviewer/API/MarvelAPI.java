@@ -19,7 +19,7 @@ public interface MarvelAPI {
     @GET("characters?limit=100&" + OVERHEAD)
     Observable<HeroesResponse> listHeroes();
 
-    @GET("{id}/comics?" + OVERHEAD)
-    Observable<ComicData> listComics(@Path("id") String id);
+    @GET("characters/{id}/comics?" + OVERHEAD)
+    Observable<ComicResponse> listComics(@Path("id") String id);
 
 }

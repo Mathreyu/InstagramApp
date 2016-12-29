@@ -7,7 +7,7 @@ package com.academy.ramon.marvelcomicviewer.models;
 public class ComicResults {
     String title;
     String description;
-    ComicImages images;
+    ComicImages[] images;
 
     public String getTitle() {
         return title;
@@ -25,11 +25,11 @@ public class ComicResults {
         this.description = description;
     }
 
-    public ComicImages getImages() {
+    public ComicImages[] getImages() {
         return images;
     }
 
-    public void setComicImages (ComicImages images) {
+    public void setComicImages (ComicImages[] images) {
         this.images = images;
     }
 }
