@@ -10,5 +10,5 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.academy.ramon.marvelcomicviewer.MainActivity">
 
-    <include layout="@layout/comics_list"/>
+    <include layout="@layout/heroes_list"/>
 </RelativeLayout>

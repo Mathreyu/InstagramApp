@@ -7,9 +7,13 @@ import java.util.List;
  */
 
 public class HeroesResponse {
-    public List<Heroes> items;
+    public Data data;
 
-    public List<Heroes> getItems() {
-        return items;
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

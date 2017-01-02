@@ -1,16 +1,12 @@
 package com.academy.ramon.marvelcomicviewer.models;
 
 /**
- * Created by Ramon on 12/20/2016.
+ * Created by Ramon on 12/28/2016.
  */
 
-public class Thumbnail {
+public class ComicImages {
     String path;
     String extension;
-
-    public String getExtension() {
-        return extension;
-    }
 
     public String getPath() {
         return path;
@@ -20,5 +16,11 @@ public class Thumbnail {
         this.path = path;
     }
 
+    public String getExtension() {
+        return extension;
+    }
 
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
 }

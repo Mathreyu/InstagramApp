@@ -1,13 +1,13 @@
 package com.academy.ramon.marvelcomicviewer;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.academy.ramon.marvelcomicviewer.api.MarvelAPI;
-import com.academy.ramon.marvelcomicviewer.models.Heroes;
+import com.academy.ramon.marvelcomicviewer.models.Hero;
 import com.academy.ramon.marvelcomicviewer.models.HeroesResponse;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
 
@@ -15,49 +15,61 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends Activity {
-    @BindView(R.id.rvHeroes) RecyclerView rvHeroes;
-    List<Heroes> heroes;
+    @BindView(R.id.rvHeroes)
+    RecyclerView rvHeroes;
 
+    private HeroAdapter adapter;
+    private Retrofit retrofit;
+    private MarvelAPI service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        getHeroesList();
-
+        retrofit = buildRetrofit();
+        service = buildMarvelAPI();
+        adapter = new HeroAdapter();
+        rvHeroes.setLayoutManager(new LinearLayoutManager(this));
+        rvHeroes.setAdapter(adapter);
     }
 
-    public void getHeroesList(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MarvelAPI.ENDPOINT)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getHeroes();
+    }
+
+    public void getHeroes() {
+        Observable<HeroesResponse> heroService = service.listHeroes();
+
+        heroService.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(hero -> {
+                    List<Hero> results = hero.getData().getHeroes();
+                    adapter.addResults(results);
+                }, Throwable::printStackTrace);
+    }
+
+    private MarvelAPI buildMarvelAPI() {
+        return retrofit.create(MarvelAPI.class);
+    }
+
+    @NonNull
+    private Retrofit buildRetrofit() {
+        return new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(MarvelAPI.ENDPOINT)
                 .build();
-
-        MarvelAPI heroesList = retrofit.create(MarvelAPI.class);
-        Call<HeroesResponse> callHeroes = heroesList.listHeroes();
-
-        callHeroes.enqueue(new Callback<HeroesResponse>() {
-            @Override
-            public void onResponse(Call<HeroesResponse> call, Response<HeroesResponse> response) {
-                HeroesResponse heroesResponse;
-                heroesResponse = response.body();
-                rvHeroes.setAdapter(new HeroAdapter(heroesResponse.getItems(),rvHeroes.getContext()));
-                heroes = heroesResponse.getItems();
-                Log.d("hey there", response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<HeroesResponse> call, Throwable t) {
-                Log.d("onFailure", t.toString());
-            }
-        });
     }
 }
+
