@@ -40,7 +40,6 @@ public class ComicListActivity extends Activity {
     private ComicAdapter adapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +67,10 @@ public class ComicListActivity extends Activity {
 
         comicService.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(e -> e.printStackTrace())
                 .subscribe(comic -> {
                     comics = comic.getData().getResults();
                     adapter.addResults(comics);
-                });
+                }, Throwable::printStackTrace);
     }
 
     private MarvelAPI buildMarvelAPI(Retrofit retrofit) {

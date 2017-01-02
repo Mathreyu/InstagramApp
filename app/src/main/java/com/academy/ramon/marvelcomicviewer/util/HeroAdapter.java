@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.academy.ramon.marvelcomicviewer.R;
@@ -45,28 +44,12 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(HeroAdapter.ViewHolder viewHolder, int position) {
         Hero hero = heroList.get(position);
-        bind(viewHolder, hero);
+        viewHolder.bind(hero);
     }
 
     @Override
     public int getItemCount() {
         return heroList.size();
-    }
-
-    private void bind(ViewHolder viewHolder, Hero hero) {
-        TextView textView = viewHolder.heroName;
-        textView.setText(hero.getName());
-        ImageView imageView = viewHolder.heroThumbnail;
-        Picasso.with(imageView.getContext()).load(hero.getThumbnail().getPath() + "." + hero.getThumbnail().getExtension()).into(imageView);
-
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ComicListActivity.class);
-                intent.putExtra("heroID", hero.getId());
-                view.getContext().startActivity(intent);
-            }
-        });
     }
 
     public void addResults(List<Hero> results) {
@@ -84,6 +67,19 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        private void bind(Hero hero) {
+            heroName.setText(hero.getName());
+            Picasso.with(heroThumbnail.getContext()).load(hero.getThumbnail().getPath() + "." + hero.getThumbnail().getExtension()).into(heroThumbnail);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), ComicListActivity.class);
+                    intent.putExtra("heroID", hero.getId());
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

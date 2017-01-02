@@ -1,5 +1,7 @@
 package com.academy.ramon.marvelcomicviewer.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,13 +9,14 @@ import java.util.List;
  */
 
 public class Data {
-    public List<Hero> results;
+    @SerializedName("heroes")
+    public List<Hero> heroes;
 
-    public Data(List<Hero> results) {
-        this.results = results;
+    public Data(List<Hero> heroes) {
+        this.heroes = heroes;
     }
 
-    public List<Hero> getResults() {
-        return results;
+    public List<Hero> getHeroes() {
+        return heroes;
     }
 }

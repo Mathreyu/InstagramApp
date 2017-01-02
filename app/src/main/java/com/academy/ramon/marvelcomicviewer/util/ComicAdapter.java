@@ -43,19 +43,8 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ComicAdapter.ViewHolder viewHolder, int position) {
         ComicResults comic = comicsList.get(position);
-        bind(viewHolder, comic);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ComicDetail.class);
-                intent.putExtra("title", comic.getTitle());
-                intent.putExtra("description", comic.getDescription());
-                if (comic.getImages()[0] != null) {
-                    intent.putExtra("image", comic.getImages()[0].getPath() + "." + comic.getImages()[0].getExtension());
-                }
-                v.getContext().startActivity(intent);
-            }
-        });
+        viewHolder.bind(comic);
+
     }
 
     @Override
@@ -66,18 +55,6 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
     public void addResults(List<ComicResults> comics) {
         comicsList.addAll(comics);
         notifyDataSetChanged();
-    }
-
-    private void bind(ViewHolder viewHolder, ComicResults comic) {
-        String imagePath = comic.getImages()[0].getPath() + "/portrait_xlarge" + "." + comic.getImages()[0].getExtension();
-        TextView textView = viewHolder.comicTitle;
-        textView.setText(comic.getTitle());
-        ImageView imageView = viewHolder.comicImage;
-        if (comic.getImages()[0] != null) {
-            Picasso.with(imageView.getContext()).load(imagePath).into(imageView);
-        } else {
-            Picasso.with(imageView.getContext()).load(R.drawable.not_found).into(imageView);
-        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,6 +68,30 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
             super(itemView);
             context = itemView.getContext();
             ButterKnife.bind(this, itemView);
+        }
+
+        private void bind(ComicResults comic) {
+
+            boolean imageExists = !comic.getImages().isEmpty();
+            comicTitle.setText(comic.getTitle());
+            if (imageExists) {
+                String imagePath = comic.getImages().get(0).getPath() + "/portrait_xlarge" + "." + comic.getImages().get(0).getExtension();
+                Picasso.with(comicImage.getContext()).load(imagePath).into(comicImage);
+            } else {
+                Picasso.with(comicImage.getContext()).load(R.drawable.not_found).into(comicImage);
+            }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ComicDetail.class);
+                    intent.putExtra("title", comic.getTitle());
+                    intent.putExtra("description", comic.getDescription());
+                    if (imageExists) {
+                        intent.putExtra("image", comic.getImages().get(0).getPath() + "." + comic.getImages().get(0).getExtension());
+                    }
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 

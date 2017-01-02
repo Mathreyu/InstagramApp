@@ -30,7 +30,6 @@ public class MainActivity extends Activity {
     private Retrofit retrofit;
     private MarvelAPI service;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +48,15 @@ public class MainActivity extends Activity {
         getHeroes();
     }
 
-    public void getHeroes(){
+    public void getHeroes() {
         Observable<HeroesResponse> heroService = service.listHeroes();
 
         heroService.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hero -> {
-                    List<Hero> results = hero.getData().getResults();
+                    List<Hero> results = hero.getData().getHeroes();
                     adapter.addResults(results);
-                });
+                }, Throwable::printStackTrace);
     }
 
     private MarvelAPI buildMarvelAPI() {

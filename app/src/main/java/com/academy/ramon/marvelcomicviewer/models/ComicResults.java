@@ -1,5 +1,7 @@
 package com.academy.ramon.marvelcomicviewer.models;
 
+import java.util.List;
+
 /**
  * Created by Ramon on 12/29/2016.
  */
@@ -7,29 +9,18 @@ package com.academy.ramon.marvelcomicviewer.models;
 public class ComicResults {
     String title;
     String description;
-    ComicImages[] images;
+    List<ComicImages> images;
 
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public ComicImages[] getImages() {
+    public List<ComicImages> getImages() {
         return images;
     }
 
-    public void setComicImages (ComicImages[] images) {
-        this.images = images;
-    }
 }

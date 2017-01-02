@@ -43,11 +43,11 @@ public class ComicDetail extends AppCompatActivity {
         title = getIntent().getExtras().getString("title");
         description = getIntent().getExtras().getString("description");
         image = getIntent().getExtras().getString("image");
-
-        Picasso.with(this).load(image).into(comicImage);
+        if (image != null) {
+            Picasso.with(this).load(image).into(comicImage);
+        }
         comicTitle.setText(title);
         comicDescription.setText(description);
-
     }
 
     private void initCollapsingToolbar() {
