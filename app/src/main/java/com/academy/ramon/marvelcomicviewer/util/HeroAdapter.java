@@ -29,28 +29,12 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
     private List<Hero> heroList;
 
-    public void addResults(List<Hero> results) {
-        heroList.addAll(results);
-        notifyDataSetChanged();
-    }
-
     public HeroAdapter() {
         heroList = new ArrayList<>();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-
-        @BindView(R.id.hero_name) TextView heroName;
-        @BindView(R.id.hero_thumbnail) CircleImageView heroThumbnail;
-
-        public ViewHolder (View itemView){
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
     @Override
-    public HeroAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public HeroAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -59,29 +43,48 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(HeroAdapter.ViewHolder viewHolder, int position){
+    public void onBindViewHolder(HeroAdapter.ViewHolder viewHolder, int position) {
         Hero hero = heroList.get(position);
         bind(viewHolder, hero);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = String.valueOf(hero.getId());
-                Intent intent = new Intent(view.getContext(), ComicListView.class);
-                intent.putExtra("heroID",id);
-                view.getContext().startActivity(intent);
-            }
-        });
-    }
-
-    private void bind(ViewHolder viewHolder, Hero hero ) {
-        TextView textView = viewHolder.heroName;
-        textView.setText(hero.getName());
-        ImageView imageView = viewHolder.heroThumbnail;
-        Picasso.with(imageView.getContext()).load(hero.getThumbnail().getPath() +"."+ hero.getThumbnail().getExtension()).into(imageView);
     }
 
     @Override
     public int getItemCount() {
         return heroList.size();
+    }
+
+    private void bind(ViewHolder viewHolder, Hero hero) {
+        TextView textView = viewHolder.heroName;
+        textView.setText(hero.getName());
+        ImageView imageView = viewHolder.heroThumbnail;
+        Picasso.with(imageView.getContext()).load(hero.getThumbnail().getPath() + "." + hero.getThumbnail().getExtension()).into(imageView);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = String.valueOf(hero.getId());
+                Intent intent = new Intent(view.getContext(), ComicListView.class);
+                intent.putExtra("heroID", id);
+                view.getContext().startActivity(intent);
+            }
+        });
+    }
+
+    public void addResults(List<Hero> results) {
+        heroList.addAll(results);
+        notifyDataSetChanged();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.hero_name)
+        TextView heroName;
+        @BindView(R.id.hero_thumbnail)
+        CircleImageView heroThumbnail;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }
