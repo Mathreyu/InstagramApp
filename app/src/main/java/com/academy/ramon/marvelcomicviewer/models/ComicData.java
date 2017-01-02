@@ -1,6 +1,5 @@
 package com.academy.ramon.marvelcomicviewer.models;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -8,17 +7,13 @@ import java.util.List;
  */
 
 public class ComicData {
-    ComicResults[] results;
+    private List<ComicResults> results;
 
-    public ComicData(ComicResults[] results) {
+    public ComicData(List<ComicResults> results) {
         this.results = results;
     }
 
-    public ComicResults[] getResults() {
+    public List<ComicResults> getResults() {
         return results;
-    }
-
-    public void setResults(ComicResults[] results) {
-        this.results = results;
     }
 }

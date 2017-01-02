@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.academy.ramon.marvelcomicviewer.R;
 import com.academy.ramon.marvelcomicviewer.models.Hero;
-import com.academy.ramon.marvelcomicviewer.views.ComicListView;
+import com.academy.ramon.marvelcomicviewer.views.ComicListActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -62,9 +62,8 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = String.valueOf(hero.getId());
-                Intent intent = new Intent(view.getContext(), ComicListView.class);
-                intent.putExtra("heroID", id);
+                Intent intent = new Intent(view.getContext(), ComicListActivity.class);
+                intent.putExtra("heroID", hero.getId());
                 view.getContext().startActivity(intent);
             }
         });
