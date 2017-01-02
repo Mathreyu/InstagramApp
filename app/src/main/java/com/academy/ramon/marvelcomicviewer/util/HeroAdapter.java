@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import com.academy.ramon.marvelcomicviewer.models.Hero;
 import com.academy.ramon.marvelcomicviewer.views.ComicListView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,21 +29,24 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
 
     private List<Hero> heroList;
 
+    public void addResults(List<Hero> results) {
+        heroList.addAll(results);
+        notifyDataSetChanged();
+    }
+
+    public HeroAdapter() {
+        heroList = new ArrayList<>();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private final Context context;
 
         @BindView(R.id.hero_name) TextView heroName;
         @BindView(R.id.hero_thumbnail) CircleImageView heroThumbnail;
 
         public ViewHolder (View itemView){
             super(itemView);
-            context = itemView.getContext();
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public HeroAdapter(List<Hero> heroList, Context context) {
-        this.heroList = heroList;
     }
 
     @Override
@@ -52,8 +55,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View heroItem = inflater.inflate(R.layout.character_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(heroItem);
-        return viewHolder;
+        return new ViewHolder(heroItem);
     }
 
     @Override
