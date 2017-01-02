@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.ComicListView"/>
+        <activity android:name=".views.ComicDetail"/>
     </application>
 
 </manifest>

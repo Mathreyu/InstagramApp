@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import com.academy.ramon.marvelcomicviewer.api.MarvelAPI;
 import com.academy.ramon.marvelcomicviewer.models.Hero;
 import com.academy.ramon.marvelcomicviewer.models.HeroesResponse;
-import com.academy.ramon.marvelcomicviewer.util.GridSpacingItemDecoration;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
 
 import java.util.List;
@@ -56,14 +56,8 @@ public class MainActivity extends Activity {
                     HeroAdapter adapter = new HeroAdapter(heros, rvHeroes.getContext());
                     rvHeroes.setLayoutManager(new GridLayoutManager(this,1));
                     rvHeroes.setItemAnimator(new DefaultItemAnimator());
-                    rvHeroes.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(10), true));
                     rvHeroes.setAdapter(adapter);
                 });
-    }
-
-    private int dpToPx(int dp) {
-        DisplayMetrics r = new DisplayMetrics();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r));
     }
 }
 
