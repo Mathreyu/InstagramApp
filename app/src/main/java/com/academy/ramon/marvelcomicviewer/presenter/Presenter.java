@@ -1,9 +1,6 @@
 package com.academy.ramon.marvelcomicviewer.presenter;
 
-import com.academy.ramon.marvelcomicviewer.api.MarvelAPI;
-import com.academy.ramon.marvelcomicviewer.components.DaggerRetrofitComponent;
-import com.academy.ramon.marvelcomicviewer.components.MarvelRetrofitModule;
-import com.academy.ramon.marvelcomicviewer.components.RetrofitComponent;
+import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
 import com.academy.ramon.marvelcomicviewer.models.ComicResponse;
 import com.academy.ramon.marvelcomicviewer.models.ComicResults;
 import com.academy.ramon.marvelcomicviewer.models.Hero;
@@ -12,8 +9,6 @@ import com.academy.ramon.marvelcomicviewer.util.ComicAdapter;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,13 +19,11 @@ import rx.schedulers.Schedulers;
  */
 
 public class Presenter {
-    RetrofitComponent retrofitComponent;
-    @Inject
-    MarvelAPI service;
 
-    public Presenter() {
-        retrofitComponent = DaggerRetrofitComponent.builder().marvelRetrofitModule(new MarvelRetrofitModule()).build();
-        service = retrofitComponent.provideAPI();
+    private MarvelApi service;
+
+    public Presenter(MarvelApi api) {
+        service = api;
     }
 
     public void getHeroes(HeroAdapter adapter) {

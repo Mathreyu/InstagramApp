@@ -7,6 +7,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.academy.ramon.marvelcomicviewer.R;
+import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
+import com.academy.ramon.marvelcomicviewer.components.DaggerRetrofitComponent;
+import com.academy.ramon.marvelcomicviewer.components.RetrofitModule;
 import com.academy.ramon.marvelcomicviewer.presenter.Presenter;
 import com.academy.ramon.marvelcomicviewer.util.ComicAdapter;
 
@@ -25,7 +28,8 @@ public class ComicListActivity extends Activity {
     RecyclerView rvComics;
 
     @Inject
-    Presenter presenter = new Presenter();
+    Presenter presenter;
+
     private int idExtra;
     private ComicAdapter adapter;
 
@@ -34,6 +38,8 @@ public class ComicListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comics_list);
         ButterKnife.bind(this);
+        DaggerRetrofitComponent.builder().retrofitModule(new RetrofitModule(MarvelApi.ENDPOINT)).build().inject(this);
+
         idExtra = getIntent().getExtras().getInt("heroID");
 
         adapter = new ComicAdapter();
@@ -47,6 +53,5 @@ public class ComicListActivity extends Activity {
         super.onResume();
         presenter.getComics(idExtra, adapter);
     }
-
 
 }

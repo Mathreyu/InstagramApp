@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
+import com.academy.ramon.marvelcomicviewer.components.DaggerRetrofitComponent;
+import com.academy.ramon.marvelcomicviewer.components.RetrofitModule;
 import com.academy.ramon.marvelcomicviewer.presenter.Presenter;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
 
@@ -17,7 +20,7 @@ public class MainActivity extends Activity {
     @BindView(R.id.rvHeroes)
     RecyclerView rvHeroes;
     @Inject
-    Presenter presenter = new Presenter();
+    Presenter presenter;
 
     private HeroAdapter adapter;
 
@@ -26,9 +29,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        DaggerRetrofitComponent.builder().retrofitModule(new RetrofitModule(MarvelApi.ENDPOINT)).build().inject(this);
 
         adapter = new HeroAdapter();
-        presenter = new Presenter();
         rvHeroes.setLayoutManager(new LinearLayoutManager(this));
         rvHeroes.setAdapter(adapter);
     }
