@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Data {
-    @SerializedName("heroes")
+    @SerializedName("results")
     public List<Hero> heroes;
 
     public Data(List<Hero> heroes) {
