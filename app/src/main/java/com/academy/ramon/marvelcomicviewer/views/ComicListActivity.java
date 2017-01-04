@@ -10,6 +10,8 @@ import com.academy.ramon.marvelcomicviewer.R;
 import com.academy.ramon.marvelcomicviewer.presenter.Presenter;
 import com.academy.ramon.marvelcomicviewer.util.ComicAdapter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -22,10 +24,10 @@ public class ComicListActivity extends Activity {
     @BindView(R.id.rvComics)
     RecyclerView rvComics;
 
+    @Inject
+    Presenter presenter = new Presenter();
     private int idExtra;
     private ComicAdapter adapter;
-    Presenter presenter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,6 @@ public class ComicListActivity extends Activity {
         idExtra = getIntent().getExtras().getInt("heroID");
 
         adapter = new ComicAdapter();
-        presenter = new Presenter();
-        presenter.initPresenter();
         rvComics.setLayoutManager(new GridLayoutManager(this, 2));
         rvComics.setItemAnimator(new DefaultItemAnimator());
         rvComics.setAdapter(adapter);

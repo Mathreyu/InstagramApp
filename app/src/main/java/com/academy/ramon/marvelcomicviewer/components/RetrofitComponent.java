@@ -10,7 +10,7 @@ import dagger.Component;
  * Created by Ramon on 1/3/2017.
  */
 @Singleton
-@Component(modules = {RetrofitModule.class})
+@Component(modules = {MarvelRetrofitModule.class})
 public interface RetrofitComponent {
-    MarvelAPI provideMarvelAPI();
+    MarvelAPI provideAPI();
 }
