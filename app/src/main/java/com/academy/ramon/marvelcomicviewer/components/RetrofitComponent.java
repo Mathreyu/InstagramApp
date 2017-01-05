@@ -12,7 +12,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {RetrofitModule.class, MainActivityModule.class})
+@Component(modules = {RetrofitModule.class, MainActivityModule.class, ComicListModule.class})
 public interface RetrofitComponent {
 
     void inject(MainActivity mainActivity);

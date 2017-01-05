@@ -1,7 +1,7 @@
 package com.academy.ramon.marvelcomicviewer.components;
 
 import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
-import com.academy.ramon.marvelcomicviewer.presenter.Presenter;
+import com.academy.ramon.marvelcomicviewer.presenter.MainActivityPresenter;
 
 import javax.inject.Singleton;
 
@@ -17,7 +17,7 @@ public class MainActivityModule {
 
     @Provides
     @Singleton
-    public Presenter providePresenter(MarvelApi marvelApi) {
-        return new Presenter(marvelApi);
+    public MainActivityPresenter providePresenter(MarvelApi marvelApi) {
+        return new MainActivityPresenter(marvelApi);
     }
 }
