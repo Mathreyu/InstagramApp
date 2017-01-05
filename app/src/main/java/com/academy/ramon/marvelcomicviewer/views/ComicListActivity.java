@@ -11,7 +11,6 @@ import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
 import com.academy.ramon.marvelcomicviewer.components.DaggerRetrofitComponent;
 import com.academy.ramon.marvelcomicviewer.components.RetrofitModule;
 import com.academy.ramon.marvelcomicviewer.presenter.ComicListPresenter;
-import com.academy.ramon.marvelcomicviewer.presenter.MainActivityPresenter;
 import com.academy.ramon.marvelcomicviewer.util.ComicAdapter;
 
 import javax.inject.Inject;
