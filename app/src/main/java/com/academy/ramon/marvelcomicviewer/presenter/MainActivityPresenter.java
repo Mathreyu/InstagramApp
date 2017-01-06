@@ -18,11 +18,11 @@ import rx.schedulers.Schedulers;
  * Created by Ramon on 1/3/2017.
  */
 
-public class Presenter {
+public class MainActivityPresenter {
 
     private MarvelApi service;
 
-    public Presenter(MarvelApi api) {
+    public MainActivityPresenter(MarvelApi api) {
         service = api;
     }
 
@@ -37,15 +37,4 @@ public class Presenter {
                 }, Throwable::printStackTrace);
     }
 
-    public void getComics(int idExtra, ComicAdapter adapter) {
-        String id = idExtra + "";
-        Observable<ComicResponse> comicService = service.listComics(id);
-
-        comicService.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(comic -> {
-                    List<ComicResults> comics = comic.getData().getResults();
-                    adapter.addResults(comics);
-                }, Throwable::printStackTrace);
-    }
 }

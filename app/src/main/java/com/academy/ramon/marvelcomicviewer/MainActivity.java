@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
 import com.academy.ramon.marvelcomicviewer.components.DaggerRetrofitComponent;
 import com.academy.ramon.marvelcomicviewer.components.RetrofitModule;
-import com.academy.ramon.marvelcomicviewer.presenter.Presenter;
+import com.academy.ramon.marvelcomicviewer.presenter.MainActivityPresenter;
 import com.academy.ramon.marvelcomicviewer.util.HeroAdapter;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
     @BindView(R.id.rvHeroes)
     RecyclerView rvHeroes;
     @Inject
-    Presenter presenter;
+    MainActivityPresenter mainActivityPresenter;
 
     private HeroAdapter adapter;
 
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.getHeroes(adapter);
+        mainActivityPresenter.getHeroes(adapter);
     }
 
 

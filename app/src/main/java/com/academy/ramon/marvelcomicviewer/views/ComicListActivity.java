@@ -10,7 +10,7 @@ import com.academy.ramon.marvelcomicviewer.R;
 import com.academy.ramon.marvelcomicviewer.api.MarvelApi;
 import com.academy.ramon.marvelcomicviewer.components.DaggerRetrofitComponent;
 import com.academy.ramon.marvelcomicviewer.components.RetrofitModule;
-import com.academy.ramon.marvelcomicviewer.presenter.Presenter;
+import com.academy.ramon.marvelcomicviewer.presenter.ComicListPresenter;
 import com.academy.ramon.marvelcomicviewer.util.ComicAdapter;
 
 import javax.inject.Inject;
@@ -28,7 +28,7 @@ public class ComicListActivity extends Activity {
     RecyclerView rvComics;
 
     @Inject
-    Presenter presenter;
+    ComicListPresenter comicListPresenter;
 
     private int idExtra;
     private ComicAdapter adapter;
@@ -51,7 +51,7 @@ public class ComicListActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.getComics(idExtra, adapter);
+        comicListPresenter.getComics(idExtra, adapter);
     }
 
 }
