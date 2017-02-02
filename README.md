@@ -1,13 +1,13 @@
-# InstagramApp
+# Marvel Viewer
 
 ##Description
-- Simple Instagram API interaction which will allow you to display images taken in places nearby your current location.
+- Simple Marvel API interaction which will allow you to display images taken in places nearby your current location.
 
 ##Libraries used
- - Instagram API
+ - Marvel API
  - Retrofit
  - Picasso 
  - ButterKnife
- - Dagger
+ - Dagger 2
 
 .... Will update this on the go.
