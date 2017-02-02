@@ -1,13 +1,13 @@
-# MarvelView
+# Marvel Viewer
 
 ##Description
-- Simple Marvel API interaction which allows the user to browse through the heroes and their apperances in comics.
+- Simple Marvel API interaction which will let you browse MArvel Comics Heroes and their comic appearances.
 
 ##Libraries used
- - Instagram API
+ - Marvel API
  - Retrofit
  - Picasso 
  - ButterKnife
- - Dagger
+ - Dagger 2
 
 .... Will update this on the go.
