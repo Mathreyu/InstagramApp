@@ -1,7 +1,7 @@
 # Marvel Viewer
 
 ##Description
-- Simple Marvel API interaction which will allow you to display images taken in places nearby your current location.
+- Simple Marvel API interaction which will let you browse MArvel Comics Heroes and their comic appearances.
 
 ##Libraries used
  - Marvel API
